@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\FacebookController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -18,15 +20,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/', function () {
+    return view('auth.login');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/fb', function () {
-    $url = "https://scrape.deviyoinc.com/?query=need%20a%20php%20developer";
-    $response = Http::get($url)
-            ->json();
-    return view('fb', compact('response'));
-})->middleware(['auth', 'verified']);
+Route::post('search-post', [FacebookController::class, 'store'])
+    ->middleware(['auth', 'verified'])
+    ->name('facebook.store');
+
+Route::get('facebook', [FacebookController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('facebook.index');
 
 require __DIR__.'/auth.php';
