@@ -36,10 +36,10 @@ class FacebookController extends Controller
      */
     public function store(Request $request)
     {
-        $url = "https://scrape.deviyoinc.com/?query={$request->search}";
-        $response = Http::get($url)
-                ->json();
-        return view('fb', compact('response'));
+        $searchKey = str($request->search)->lower()->value;
+        $url = "https://scrape.deviyoinc.com/?query={$searchKey}";
+        $response = Http::get($url)->json();
+        return view('fb', compact(["response", "searchKey"]));
     }
 
     /**

@@ -9,13 +9,13 @@
             <form action="{{ route("facebook.store") }}" method="post">
                 @csrf
                 <label for="">Search keywords:</label>
-                <input type="search" name="search" id="search" class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mb-2">
+                <input type="search" value="{{ $searchKey ?? '' }}" name="search" id="search" class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mb-2">
             </form>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-2">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="container">
                         <div class="box flex justify-center" style="flex-wrap: wrap">
-                            @forelse ($response as $data)
+                            @forelse ($response ?? [] as $data)
                             <div class="flex md:w-1/2 w-full mb-6">
                                 <a href="{{ \Arr::get($data, 'permalink') }}" target="_blank" class="w-full">
                                     <div class="flex flex-col md:flex-row rounded-lg bg-white shadow-lg max-w-[550px]">
